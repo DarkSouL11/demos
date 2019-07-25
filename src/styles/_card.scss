@@ -1,0 +1,10 @@
+.card {
+  background-color: $card-background;
+  border-radius: $border-radius;
+  box-shadow: $shadow-color 2px 2px 2px 0px;
+  padding: 1rem;
+
+  &.is-square {
+    border-radius: 0;
+  }
+}

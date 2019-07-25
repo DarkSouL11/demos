@@ -1,0 +1,41 @@
+.scroll-base {
+  &::-webkit-scrollbar{
+    background: $scrollbar-background;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    background: $scrollbar-thumb-background;
+    border-radius: $border-radius;
+  }
+
+  &::-webkit-scrollbar-thumb:hover{
+    background: $scrollbar-thumb-background;
+  }
+
+  &::-webkit-scrollbar-thumb:active{
+    background: $scrollbar-thumb-background;
+  }
+
+  &::-webkit-scrollbar-track{
+    border: 1px gray $border-color;
+    border-radius: $border-radius;
+  }
+}
+
+.scroll {
+  @extend .scroll-base;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+}
+
+.scroll-h {
+  @extend .scroll;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar{
+    height: 1rem;
+  }
+}

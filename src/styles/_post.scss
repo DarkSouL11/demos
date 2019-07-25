@@ -1,0 +1,23 @@
+.post {
+  padding: 1rem;
+}
+
+.post-comment {
+  width: calc(100% + 2rem);
+  margin: -1rem;
+  margin-bottom: 1rem;
+}
+
+.post-comment-user {
+  @extend .mgn-b;
+
+  color: $primary-color;
+  font-size: 1.4rem;
+}
+
+.post-comment-body {
+  @extend .mgn-b;
+
+  color: $hint-font-color;
+  font-size: 1.2rem;
+}

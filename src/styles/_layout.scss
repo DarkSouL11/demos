@@ -1,0 +1,46 @@
+// Layouts can be nested to create complex UIs
+.layout {
+  @extend .flex-col;
+  height: 100%;
+  flex: 1 1 0;
+}
+
+.layout-content {
+  @extend .scroll;
+
+  background: $layout-content-background;
+  position: relative;
+  flex: 1 1 0;
+  overflow-y: auto;
+
+  &.is-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.layout-header {
+  background: $primary-color;
+  color: $light-font-color;
+  flex: 0 0 0;
+  display: flex;
+  align-items: center;
+  padding: .5rem;
+  box-shadow: $shadow-color 0px 3px 5px 1px;
+  z-index: $header-z;
+}
+
+.layout-header-item {
+  flex: 0 0 0;
+  padding: .5rem;
+}
+
+.layout-header-title {
+  flex: 1 1 0;
+  margin: 0.5rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

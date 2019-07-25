@@ -1,0 +1,16 @@
+.detail-row {
+  display: flex;
+  align-items: center;
+}
+
+.detail-row-icon {
+  display: flex;
+  color: $primary-color;
+  margin-right: 1rem;
+}
+
+.detail-row-title {
+  display: flex;
+  color: $hint-font-color;
+  font-size: 1.2rem;
+}

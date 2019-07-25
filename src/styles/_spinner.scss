@@ -1,0 +1,8 @@
+.spinner {
+  height: $spinner-size;
+  width: $spinner-size;
+  border: .5rem solid rgba($primary-color, .5);
+  border-top-color: $primary-color;
+  border-radius: 50%;
+  animation: rotate360 480ms linear 0s infinite;
+}
