@@ -1,5 +1,5 @@
-import { apiRequest } from './utils';
 import config from '../utils/config';
+import { apiRequest } from './utils';
 
 function getSkip(pageNum) {
   return config.PAGE_LIMIT * (pageNum - 1);
