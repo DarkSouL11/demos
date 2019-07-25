@@ -76,7 +76,7 @@ function UserPage({ usersStore: store, match: { params } }) {
   return (
     <div className="layout">
       <PageMeta title="Posts" />
-      <Header backTo="/home" title="Blog | Posts" />
+      <Header backTo="/" title="Blog | Posts" />
       {ui()}
     </div>
   );

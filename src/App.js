@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Redirect,
   Route,
   BrowserRouter as Router,
   Switch
@@ -18,16 +17,10 @@ import UserPage from './pages/user/UserPage';
 function App() {
   return (
     <Provider {...stores}>
-      <Router>
+      <Router basename="/demos/blog">
         <Notifications />
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => <Redirect to="/home" />}
-          />
-
-          <Route exact path="/home" component={HomePage}/>
+          <Route exact path="/" component={HomePage}/>
           <Route
             exact
             path="/user/:userId/:pageNum?"
