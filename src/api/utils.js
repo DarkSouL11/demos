@@ -1,9 +1,9 @@
-import map from 'lodash/map';
+import map from "lodash/map";
 
-import config from '../utils/config';
+import config from "../utils/config";
 
 export function searchParams(params) {
-  return map(params, (value, key) => `${key}=${value}`).join('&');
+  return map(params, (value, key) => `${key}=${value}`).join("&");
 }
 
 /**
@@ -65,13 +65,13 @@ export async function parseJsonResponse(response) {
  */
 export async function apiRequest(method, path, body = null, options = {}) {
   let defaultHeaders = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+    Accept: "application/json",
+    "Content-Type": "application/json"
   };
 
   let defaultOptions = { method };
   if (body) {
-    defaultOptions['body'] = JSON.stringify(body);
+    defaultOptions["body"] = JSON.stringify(body);
   }
 
   const { headers, params, ...remainingOptions } = options;

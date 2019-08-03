@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import forOwn from 'lodash/forOwn';
+import React, { Component } from "react";
+import forOwn from "lodash/forOwn";
 
 /**
  * A higher order component for using React lifecycle hooks with
@@ -12,7 +12,7 @@ const lifecycle = hooks => BaseComponent => {
     }
   }
 
-  forOwn(hooks, (v, k) => WrapperComponent.prototype[k] = v);
+  forOwn(hooks, (v, k) => (WrapperComponent.prototype[k] = v));
 
   return WrapperComponent;
 };

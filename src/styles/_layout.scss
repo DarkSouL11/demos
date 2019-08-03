@@ -1,8 +1,14 @@
 // Layouts can be nested to create complex UIs
 .layout {
   @extend .flex-col;
-  height: 100%;
-  flex: 1 1 0;
+  // To take full available space when nested in another layout
+  flex: 1 0 0;
+
+  // If layout is the root most layout use `is-main` class so that it fill the
+  // entire available space
+  &.is-main {
+    height: 100%;
+  }
 }
 
 .layout-content {
@@ -27,14 +33,14 @@
   flex: 0 0 0;
   display: flex;
   align-items: center;
-  padding: .5rem;
+  padding: 0.5rem;
   box-shadow: $shadow-color 0px 3px 5px 1px;
   z-index: $header-z;
 }
 
 .layout-header-item {
   flex: 0 0 0;
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .layout-header-title {

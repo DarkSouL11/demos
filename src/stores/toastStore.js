@@ -1,14 +1,16 @@
 import { action, decorate, observable } from "mobx";
 
+const defaultTimeout = 1000;
+
 // TODO add queuing support
 export class ToastStore {
   _timer = null;
 
   content = null;
   // Time in ms
-  timeout = 2000;
+  timeout = defaultTimeout;
 
-  show = (content, timeout = 2000) => {
+  show = (content, timeout = defaultTimeout) => {
     // Hide if there is any `Toast`
     this.hide();
 
@@ -23,7 +25,7 @@ export class ToastStore {
     clearTimeout(this._timer);
 
     this.content = null;
-    this.timeout = 2000;
+    this.timeout = defaultTimeout;
   };
 }
 

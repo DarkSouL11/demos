@@ -4,9 +4,9 @@ import { Header, PageMeta, RedirectLayout } from "../../components/general";
 
 function HomePage() {
   return (
-    <div class="layout">
+    <div class="layout is-main">
       <PageMeta title="Home" />
-      <Header title="React Template" />
+      <Header title="Header component" />
       <RedirectLayout
         message="This is RedirectLayout component"
         linkTitle="More components"

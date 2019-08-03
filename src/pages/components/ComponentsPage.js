@@ -2,8 +2,10 @@ import React from "react";
 
 import {
   Card,
+  HintLayout,
   Header,
   Icon,
+  LoadingLayout,
   PageMeta,
   Tappable
 } from "../../components/general";
@@ -80,25 +82,66 @@ function ComponentsPage() {
     return (
       <Card className="demo-card">
         <div className="title mgn-b">Toast</div>
-        <Tappable
-          className="btn"
-          onClick={() => toastStore.show("This is a demo toast")}
-        >
-          Show Toast
-        </Tappable>
+        <div className="demo-items">
+          <Tappable
+            className="btn btn-small"
+            onClick={() => toastStore.show("This is a demo toast")}
+          >
+            Show Toast
+          </Tappable>
+          <Tappable
+            className="btn btn-small"
+            onClick={() =>
+              toastStore.show("This toast will disappear after 3 seconds", 3000)
+            }
+          >
+            Toast with custom timeout
+          </Tappable>
+          <Tappable className="btn btn-small" onClick={() => toastStore.hide()}>
+            Hide Toast
+          </Tappable>
+        </div>
+      </Card>
+    );
+  }
+
+  function loadingUi() {
+    return (
+      <Card className="demo-card">
+        <div className="title mgn-b">LoadingLayout</div>
+        <LoadingLayout />
+      </Card>
+    );
+  }
+
+  function errorUi() {
+    return (
+      <Card className="demo-card">
+        <div className="title mgn-b">HintLayout</div>
+        <HintLayout
+          message="Show me when some error occurs"
+          actionLabel="Resolve Error"
+          actionFn={() =>
+            alert(
+              "You can perform some action on click to help user resolve the error"
+            )
+          }
+        />
       </Card>
     );
   }
 
   return (
-    <div className="layout">
+    <div className="layout is-main">
       <PageMeta title="Components" />
-      <Header backTo="/" title="Components" />
+      <Header backTo="/" title="Header component with back button" />
       <div className="layout-content">
         <div className="row is-tiled is-filled">
           <div className="col is-3-desktop">{cardUi()}</div>
           <div className="col is-3-desktop">{iconsUi()}</div>
           <div className="col is-3-desktop">{buttonsUi()}</div>
+          <div className="col is-3-desktop">{loadingUi()}</div>
+          <div className="col is-3-desktop">{errorUi()}</div>
           <div className="col is-3-desktop">{toastUi()}</div>
         </div>
       </div>

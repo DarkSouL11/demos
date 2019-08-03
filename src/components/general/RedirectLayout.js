@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-import Tappable from './Tappable';
+import Tappable from "./Tappable";
 
 function RedirectLayout({ message, linkTitle, linkTo }) {
   return (
@@ -10,11 +10,7 @@ function RedirectLayout({ message, linkTitle, linkTo }) {
       <div className="layout-content is-centered pad">
         <p>{message}</p>
         {linkTitle && linkTo && (
-          <Tappable
-            className="btn mgn-t"
-            component={Link}
-            to={linkTo}
-          >
+          <Tappable className="btn mgn-t" component={Link} to={linkTo}>
             {linkTitle}
           </Tappable>
         )}
@@ -27,6 +23,6 @@ RedirectLayout.propTypes = {
   message: PropTypes.string.isRequired,
   linkTo: PropTypes.string,
   linkTitle: PropTypes.string
-}
+};
 
 export default RedirectLayout;
