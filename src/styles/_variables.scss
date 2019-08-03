@@ -1,0 +1,47 @@
+$tablet-min-width: 55rem;
+$desktop-min-width: 64rem;
+
+$primary-color: #009688;
+$primary-color-hover: lighten($primary-color, 5);
+$primary-color-active: darken($primary-color, 5);
+
+$success-color: #28a745;
+$success-color-hover: lighten($success-color, 5);
+$success-color-active: darken($success-color, 5);
+
+$danger-color: #cc0000;
+$danger-color-hover: lighten($danger-color, 5);
+$danger-color-active: darken($danger-color, 5);
+
+$default-font-color: #515151;
+$hint-font-color: #828282;
+$light-font-color: #ffffff;
+
+$border-radius: 0.4rem;
+$border-color: #e2e2e2;
+
+$shadow-color: rgba(#a1a1a1, .5);
+
+// Z Indexes
+$header-z: 10;
+
+// Button
+$btn-round-size: 3rem;
+
+// Card
+$card-background: #ffffff;
+
+// Layout
+$layout-content-background: #f8f8f8;
+
+// List
+$list-margin: 1.5rem;
+$list-width: 28rem;
+$list-background: #eee;
+
+// Scrollbar
+$scrollbar-background: #f5f5f5;
+$scrollbar-thumb-background: #c8c8c8;
+
+// Spinner
+$spinner-size: 4rem;

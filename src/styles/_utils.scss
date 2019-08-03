@@ -1,0 +1,63 @@
+@mixin tablet() {
+  @media screen and (min-width: $tablet-min-width) {
+    @content;
+  }
+}
+
+@mixin desktop() {
+  @media screen and (min-width: $desktop-min-width) {
+    @content;
+  }
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.mgn-r {
+  margin-right: 0.5rem;
+}
+
+.mgn-t {
+  margin-top: 1rem;
+}
+
+.mgn-b {
+  margin-bottom: 1rem;
+}
+
+.pad {
+  padding: 1rem;
+}
+
+.primary {
+  color: $primary-color;
+}
+
+.sep-b {
+  &:not(:last-child) {
+    border-bottom: 1px solid $border-color;
+  }
+}
+
+.success {
+  color: $success-color;
+}
+
+.title {
+  @extend .bold;
+
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1.4rem;
+}

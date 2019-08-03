@@ -1,0 +1,36 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0.5rem;
+
+  &.is-tiled {
+    flex-wrap: wrap;
+  }
+
+  &.is-centered {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.col {
+  flex: 1 1 auto;
+  padding: 0.5rem;
+  max-width: 100%;
+  width: 100%;
+
+  &.is-2-tablet {
+    @include tablet {
+      max-width: 50%;
+      width: 50%;
+    }
+  }
+
+  &.is-3-desktop {
+    @include desktop {
+      max-width: 33.3333%;
+      width: 33.3333%;
+    }
+  }
+}
