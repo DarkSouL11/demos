@@ -4,7 +4,6 @@ import { Provider } from "mobx-react";
 
 import "./App.scss";
 
-import ComponentsPage from "./pages/components/ComponentsPage";
 import config from "./utils/config";
 import HomePage from "./pages/home/HomePage";
 import stores from "./stores";
@@ -16,7 +15,6 @@ function App() {
       <Router basename={`/demos/${config.projectName}`}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/components/" component={ComponentsPage} />
         </Switch>
 
         <Toast />

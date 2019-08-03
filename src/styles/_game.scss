@@ -1,0 +1,15 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.game-row {
+  display: flex;
+}
+
+.game-box {
+  flex: 1 0 0;
+  padding: 1rem;
+  border: 1px solid $border-color;
+}
