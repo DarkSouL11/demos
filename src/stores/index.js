@@ -1,1 +1,5 @@
-export default {};
+import toastStore from "./toastStore";
+
+export default {
+  toastStore
+};

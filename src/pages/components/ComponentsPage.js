@@ -7,6 +7,8 @@ import {
   PageMeta,
   Tappable
 } from "../../components/general";
+import { mobxify } from "../../components/hoc";
+import toastStore from "../../stores/toastStore";
 
 function ComponentsPage() {
   function buttonsUi() {
@@ -74,6 +76,20 @@ function ComponentsPage() {
     );
   }
 
+  function toastUi() {
+    return (
+      <Card className="demo-card">
+        <div className="title mgn-b">Toast</div>
+        <Tappable
+          className="btn"
+          onClick={() => toastStore.show("This is a demo toast")}
+        >
+          Show Toast
+        </Tappable>
+      </Card>
+    );
+  }
+
   return (
     <div className="layout">
       <PageMeta title="Components" />
@@ -83,10 +99,11 @@ function ComponentsPage() {
           <div className="col is-3-desktop">{cardUi()}</div>
           <div className="col is-3-desktop">{iconsUi()}</div>
           <div className="col is-3-desktop">{buttonsUi()}</div>
+          <div className="col is-3-desktop">{toastUi()}</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default ComponentsPage;
+export default mobxify("toastStore")(ComponentsPage);

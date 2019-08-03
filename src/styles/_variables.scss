@@ -20,10 +20,11 @@ $light-font-color: #ffffff;
 $border-radius: 0.4rem;
 $border-color: #e2e2e2;
 
-$shadow-color: rgba(#a1a1a1, .5);
+$shadow-color: rgba(#a1a1a1, 0.5);
 
 // Z Indexes
 $header-z: 10;
+$toast-z: 11;
 
 // Button
 $btn-round-size: 3rem;
@@ -45,3 +46,8 @@ $scrollbar-thumb-background: #c8c8c8;
 
 // Spinner
 $spinner-size: 4rem;
+
+// Toast
+$toast-background: rgba(1, 1, 1, 0.7);
+$toast-radius: 2rem;
+$toast-font-size: 1.2rem;
