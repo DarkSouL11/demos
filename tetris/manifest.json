@@ -1,6 +1,6 @@
 {
-  "short_name": "React Template",
-  "name": "A base template for demo projects",
+  "short_name": "Tetris",
+  "name": "Tetris block game implemented in javascript",
   "icons": [
     {
       "src": "favicon.ico",
