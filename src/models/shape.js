@@ -2,7 +2,7 @@ import { decorate, observable, action, computed } from "mobx";
 import cloneDeep from "lodash/cloneDeep";
 
 import { randomInt } from "../utils/random";
-import { iterateMatrix } from "../utils/matrix";
+import { iterateMatrix, rotateMatrix } from "../utils/matrix";
 
 class Shape {
   // static fixedShapes = [[[1, 1]], [[1, 1, 1]], [[1]]];
@@ -45,8 +45,9 @@ class Shape {
     this._advanceInterval = setInterval(() => this.advance(), this.grid.speed);
   }
 
-  _canMove = position => {
+  _isValidConfiguration = (position, matrix) => {
     const [gridRowIndex, gridColIndex] = this._calculateTopLeftPosition(
+      matrix,
       position
     );
 
@@ -57,44 +58,50 @@ class Shape {
       // Check if crosses left most column
       position[1] < 0 ||
       // Check if crosses right most column
-      position[1] + this.colSize - 1 >= this.grid.colSize
+      position[1] + matrix[0].length - 1 >= this.grid.colSize
     ) {
       return false;
     }
 
-    // Returns true if cannot advance
-    const cannotAdvance = iterateMatrix(
-      this.matrix,
-      (rowIndex, colIndex, matrix) => {
-        const isFilledInShape = matrix[rowIndex][colIndex];
-        let isFilledInGrid = false;
-        if (
-          this.grid.isValidPosition(
-            gridRowIndex + rowIndex,
-            gridColIndex + colIndex
-          )
-        ) {
-          isFilledInGrid =
-            this.grid.matrix[gridRowIndex + rowIndex][gridColIndex + colIndex] >
-            -1;
-        }
-
-        if (isFilledInShape && isFilledInGrid) {
-          return true;
-        }
+    // Returns true if config is not valid
+    const isNotValid = iterateMatrix(matrix, (rowIndex, colIndex, matrix) => {
+      const isFilledInShape = matrix[rowIndex][colIndex] > -1;
+      let isFilledInGrid = false;
+      if (
+        this.grid.isValidPosition(
+          gridRowIndex + rowIndex,
+          gridColIndex + colIndex
+        )
+      ) {
+        isFilledInGrid =
+          this.grid.matrix[gridRowIndex + rowIndex][gridColIndex + colIndex] >
+          -1;
       }
-    );
 
-    if (cannotAdvance) {
+      if (isFilledInShape && isFilledInGrid) {
+        return true;
+      }
+    });
+
+    if (isNotValid) {
       return false;
     } else {
       return true;
     }
   };
 
-  _calculateTopLeftPosition = bottomLeftPosition => {
+  _canMove = position => {
+    return this._isValidConfiguration(position, this.matrix);
+  };
+
+  _canRotate = () => {
+    return this._isValidConfiguration(this.position, rotateMatrix(this.matrix));
+  };
+
+  _calculateTopLeftPosition = (matrix, bottomLeftPosition) => {
+    const rowSize = matrix.length;
     const [rowIndex, colIndex] = bottomLeftPosition;
-    return [rowIndex - this.rowSize + 1, colIndex];
+    return [rowIndex - rowSize + 1, colIndex];
   };
 
   // `recursive = true` will make shape advance till it cannot advance anymore
@@ -132,13 +139,19 @@ class Shape {
     }
   };
 
+  rotate = () => {
+    if (this.position && this._canRotate()) {
+      this.matrix = rotateMatrix(this.matrix);
+    }
+  };
+
   stop = () => {
     clearTimeout(this._advanceInterval);
   };
 
   get topLeftPosition() {
     if (!this.position) return null;
-    return this._calculateTopLeftPosition(this.position);
+    return this._calculateTopLeftPosition(this.matrix, this.position);
   }
 
   get initialColIndex() {

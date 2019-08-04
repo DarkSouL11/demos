@@ -25,6 +25,9 @@ const gameEventsHandler = event => {
     case 37:
       store.move(-1);
       break;
+    case 38:
+      store.rotate();
+      break;
     // Right arrow
     case 39:
       store.move(1);

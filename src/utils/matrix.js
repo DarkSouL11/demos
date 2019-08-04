@@ -1,7 +1,7 @@
 import { isNullOrUndef } from "./misc";
 
 export function createMatrix(rowSize, colSize, fill = -1) {
-  return new Array(rowSize).fill(new Array(colSize).fill(fill));
+  return new Array(rowSize).fill(0).map(() => new Array(colSize).fill(-1));
 }
 
 export function iterateMatrix(matrix, callback) {
@@ -26,4 +26,17 @@ export function iterateMatrix(matrix, callback) {
     colIndex = 0;
     rowIndex += 1;
   }
+}
+
+export function rotateMatrix(matrix) {
+  const rowsLen = matrix.length;
+  const colsLen = matrix[0].length;
+  const rotatedMatrix = createMatrix(colsLen, rowsLen);
+
+  iterateMatrix(matrix, (rowIndex, colIndex) => {
+    rotatedMatrix[colIndex][rowsLen - 1 - rowIndex] =
+      matrix[rowIndex][colIndex];
+  });
+
+  return rotatedMatrix;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-const siteName = "React Template";
+const siteName = "Tetris";
 
 const ogProperties = ["site_name", "title", "description", "image", "url"];
 

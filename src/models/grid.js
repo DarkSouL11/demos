@@ -105,6 +105,12 @@ class Grid {
     }
   };
 
+  rotate = () => {
+    if (!this.isEnded && this.shape) {
+      this.shape.rotate();
+    }
+  };
+
   restart = () => {
     if (this.shape) this.shape.stop();
 

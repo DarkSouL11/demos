@@ -8,17 +8,13 @@ class GameStore {
     this.instance.start();
   };
 
-  retry = () => {
-    this.instance.restart();
-  };
+  retry = () => this.instance.restart();
 
-  move = step => {
-    if (this.instance) this.instance.move(step);
-  };
+  rotate = () => this.instance.rotate();
 
-  place = () => {
-    if (this.instance) this.instance.quickPlace();
-  };
+  move = step => this.instance.move(step);
+
+  place = () => this.instance.quickPlace();
 }
 
 decorate(GameStore, {

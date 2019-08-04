@@ -24,10 +24,7 @@ function GameControls({ gameStore: store, toastStore }) {
         <div className="game-controls">
           <div className="game-control">
             <div className="game-control-label">Rotate</div>
-            <Tappable
-              className="btn btn-small"
-              onClick={() => toastStore.show("Not yet implemented")}
-            >
+            <Tappable className="btn btn-small" onClick={() => store.rotate()}>
               <Icon name="arrow_upward" />
             </Tappable>
           </div>
@@ -64,10 +61,16 @@ function GameControls({ gameStore: store, toastStore }) {
         className: "btn btn-small",
         onClick: () => store.start()
       };
+    } else if (!grid.isEnded) {
+      actionProps = {
+        children: "Reset Game",
+        className: "btn btn-danger btn-small",
+        onClick: () => store.retry()
+      };
     } else {
       actionProps = {
         children: "Restart Game",
-        className: "btn btn-danger btn-small",
+        className: "btn btn-small",
         onClick: () => store.retry()
       };
     }
