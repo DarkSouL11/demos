@@ -1,7 +1,7 @@
 {
   "name": "tetris",
   "version": "0.1.0",
-  "homepage": "https://darksoul11.github.io/demos/react-template",
+  "homepage": "https://darksoul11.github.io/demos/tetris",
   "dependencies": {
     "classnames": "^2.2.6",
     "lodash": "^4.17.15",

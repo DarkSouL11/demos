@@ -54,6 +54,10 @@
   color: $success-color;
 }
 
+.danger {
+  color: $danger-color;
+}
+
 .title {
   @extend .bold;
 

@@ -1,15 +1,67 @@
+$box-size: 4rem;
+$details-container-width: 15rem;
+
 .game {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.game-grid-row {
+  display: flex;
+}
+
+.game-grid-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: $box-size;
+  width: $box-size;
+  padding: 1rem;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+}
+
+.game-details {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-}
-
-.game-row {
-  display: flex;
-}
-
-.game-box {
-  flex: 1 0 0;
   padding: 1rem;
+  min-width: $details-container-width;
+  text-align: center;
+}
+
+.game-detail {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.game-score {
   border: 1px solid $border-color;
+  border-radius: $border-radius;
+  font-weight: bold;
+  padding: 0.5rem;
+}
+
+.game-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-control {
+  width: 7rem;
+}
+
+.game-control-label {
+  font-size: 1rem;
+  font-weight: 200;
 }

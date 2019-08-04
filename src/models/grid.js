@@ -1,87 +1,127 @@
-import { action, computed, observable, decorate, runInAction } from "mobx";
-import cloneDeep from "lodash/cloneDeep";
+import { action, computed, observable, decorate, toJS } from "mobx";
 import remove from "lodash/remove";
 
-import { createMatrix } from "../utils/matrix";
+import { createMatrix, iterateMatrix } from "../utils/matrix";
 import Shape from "./shape";
 
 class Grid {
   static defaultOptions = {
-    rowSize: 7,
-    colSize: 7,
-    // Interval in which shapes will be generated
-    interval: 3000,
-    // Speed with which shape will move
-    speed: 1000
+    rowSize: 15,
+    colSize: 10,
+    // Speed with which shape will move this can be used as difficuly setting
+    speed: 500
   };
 
   matrix = null;
   score = 0;
+  isStarted = false;
   isEnded = false;
-  queue = [];
-  _numShapes = 0;
+  shape = null;
+  _nextShapeId = 0;
 
   constructor(options = {}) {
     this._options = Object.assign({}, Grid.defaultOptions, options);
     this.matrix = createMatrix(this.rowSize, this.colSize);
-    this._init();
   }
 
-  _init = () => {
-    this.queue.push(Shape.generate(this._numShapes++, this));
-    this._shapeGenerationInterval = setInterval(() => {
-      runInAction(() =>
-        this.queue.push(Shape.generate(this._numShapes++, this))
-      );
-    }, this.interval);
-  };
+  _addShape = () => (this.shape = Shape.generate(this._nextShapeId++, this));
 
   _evaluate = () => {
-    const removedRows = remove(this.matrix, o => o.every(v => v > -1));
+    const clonedMatrix = toJS(this.matrix);
+    const removedRows = remove(clonedMatrix, o => o.every(v => v > -1));
+    const newRows = createMatrix(removedRows.length, this.colSize);
+    // Adds new empty rows at the top to account for the removed rows
+    Array.prototype.unshift.apply(clonedMatrix, newRows);
+
     this.score += removedRows.length * this.colSize;
+    this.matrix = clonedMatrix;
   };
 
   _place = shape => {
-    if (!shape.position) {
+    const position = shape.topLeftPosition;
+    if (!position) {
       return false;
     } else {
-      const [gridRowIndex, gridColIndex] = shape.position;
-      this.queue.shift();
-      let rowIndex = 0,
-        colIndex = 0;
+      const [gridRowIndex, gridColIndex] = position;
 
-      while (rowIndex < shape.matrix.length) {
-        const row = shape.matrix[rowIndex];
-        while (colIndex < row.length) {
-          if (row[colIndex] !== -1) {
-            this.matrix[rowIndex + gridRowIndex][colIndex + gridColIndex] =
-              shape.id;
+      // Will return true if failed to place any element from shape in grid
+      const didPlaceFail = iterateMatrix(
+        shape.matrix,
+        (rowIndex, colIndex, matrix) => {
+          if (matrix[rowIndex][colIndex] > -1) {
+            if (
+              this.isValidPosition(
+                gridRowIndex + rowIndex,
+                gridColIndex + colIndex
+              )
+            ) {
+              this.matrix[rowIndex + gridRowIndex][colIndex + gridColIndex] =
+                shape.id;
+            } else {
+              return true;
+            }
           }
-          colIndex += 1;
         }
+      );
 
-        colIndex = 0;
-        rowIndex += 1;
+      if (didPlaceFail) {
+        return false;
+      } else {
+        // Dereference shape
+        this.shape = null;
+        return true;
       }
-      return true;
     }
   };
 
+  isValidPosition = (rowIndex, colIndex) => {
+    return (
+      rowIndex >= 0 &&
+      rowIndex < this.rowSize &&
+      colIndex >= 0 &&
+      colIndex < this.colSize
+    );
+  };
+
   move = step => {
-    const shape = this.queue[0];
-    if (shape) {
-      shape.move(step);
+    if (!this.isEnded && this.shape) {
+      this.shape.move(step);
     }
   };
 
   placeAndEvaluate = shape => {
-    const couldPlace = this._place(shape);
-    if (couldPlace) {
+    const didPlaceSucceed = this._place(shape);
+    if (didPlaceSucceed) {
       this._evaluate();
+      this._addShape();
     } else {
-      clearInterval(this._shapeGenerationInterval);
-      this.queue.forEach(shape => shape.stop());
       this.isEnded = true;
+    }
+  };
+
+  quickPlace = () => {
+    if (!this.isEnded && this.shape) {
+      this.shape.advance(true);
+    }
+  };
+
+  restart = () => {
+    if (this.shape) this.shape.stop();
+
+    this.matrix = createMatrix(this.rowSize, this.colSize);
+    this.isStarted = false;
+    this.isEnded = false;
+    this.shape = null;
+    this.score = 0;
+    this._nextShapeId = 0;
+
+    this.start();
+  };
+
+  start = () => {
+    if (!this.isStarted) {
+      this._addShape();
+      this.isStarted = true;
     }
   };
 
@@ -93,8 +133,8 @@ class Grid {
     return this._options.rowSize;
   }
 
-  get interval() {
-    return this._options.interval;
+  get isAction() {
+    return this.isStarted && !this.isEnded;
   }
 
   get speed() {
@@ -102,47 +142,42 @@ class Grid {
   }
 
   get matrixWithShapes() {
-    const matrix = cloneDeep(this.matrix);
-    this.queue.forEach(shape => {
-      if (!shape.position) return;
+    const matrix = toJS(this.matrix);
+    if (this.shape && this.shape.position) {
+      const [gridRowIndex, gridColIndex] = this.shape.topLeftPosition;
 
-      const [gridRowIndex, gridColIndex] = shape.position;
-      let rowIndex = 0,
-        colIndex = 0;
-
-      const shapeMatrix = shape.matrix;
-      while (rowIndex < shapeMatrix.length) {
-        const row = shapeMatrix[rowIndex];
-        while (colIndex < row.length) {
-          if (row[colIndex] !== -1) {
-            if (
-              gridRowIndex + rowIndex < this.rowSize &&
-              gridColIndex + colIndex < this.colSize
-            ) {
-              matrix[gridRowIndex + rowIndex][gridColIndex + colIndex] =
-                row[rowIndex];
-            }
+      iterateMatrix(this.shape.matrix, (rowIndex, colIndex) => {
+        if (this.shape.matrix[rowIndex][colIndex] > -1) {
+          if (
+            this.isValidPosition(
+              gridRowIndex + rowIndex,
+              gridColIndex + colIndex
+            )
+          ) {
+            matrix[gridRowIndex + rowIndex][
+              gridColIndex + colIndex
+            ] = this.shape.id;
           }
-          colIndex += 1;
         }
+      });
+    }
 
-        colIndex = 0;
-        rowIndex += 1;
-      }
-    });
     return matrix;
   }
 }
 
 decorate(Grid, {
   matrix: observable,
-  queue: observable,
+  shape: observable,
+  isStarted: observable,
   isEnded: observable,
   score: observable,
+  _addShape: action,
   _evaluate: action,
   _place: action,
-  // move: action,
   placeAndEvaluate: action,
+  restart: action,
+  start: action,
   matrixWithShapes: computed
 });
 
