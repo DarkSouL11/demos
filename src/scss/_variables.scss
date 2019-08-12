@@ -1,0 +1,18 @@
+$primary-color: #9d8df1;
+$secondary-color: #1cfeba;
+$danger-color: #cc0000;
+
+$primary-color-active: darken($primary-color, 5);
+$secondary-color-active: darken($secondary-color, 5);
+$danger-color-active: darken($danger-color, 5);
+
+$background-color: #f5f5f5;
+$font-color: #515151;
+$border-color: #e2e2e2;
+$border-radius: 4px;
+
+$board-cell-size: 16px;
+
+$snake-background-color: $primary-color;
+$snake-head-background-color: $secondary-color;
+$food-background-color: $secondary-color;

@@ -1,0 +1,44 @@
+.game {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+}
+
+.game-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1 0 0;
+}
+
+.game-cell {
+  flex: 1 0 0;
+  width: $board-cell-size;
+  height: $board-cell-size;
+  border-radius: $border-radius;
+
+  &.food {
+    background-color: $food-background-color;
+  }
+
+  &.snake {
+    background-color: $snake-background-color;
+
+    &.is-head {
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: $board-cell-size / 2;
+        height: $board-cell-size / 2;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background-color: $snake-head-background-color;
+      }
+    }
+  }
+}

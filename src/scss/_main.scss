@@ -1,0 +1,43 @@
+body {
+  background-color: $background-color;
+  color: $font-color;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+  * {
+    box-sizing: inherit;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  justify-content: space-evenly;
+}
+
+.mgn-b {
+  margin-bottom: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px;
+  border-radius: $border-radius;
+  background-color: $primary-color;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $primary-color-active;
+  }
+
+  &.is-danger {
+    background-color: $danger-color;
+
+    &:hover {
+      background-color: $danger-color-active;
+    }
+  }
+}
